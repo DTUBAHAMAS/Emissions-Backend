@@ -22,5 +22,8 @@
     },
     "scripts": {
         "start": "php -S localhost:8001 -t public/"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^6.2"
     }
 }

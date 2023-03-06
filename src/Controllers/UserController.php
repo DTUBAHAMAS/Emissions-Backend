@@ -29,14 +29,12 @@ class UserController
 
         $data = $request->getParsedBody();
 
-        $hashed_password = password_hash($data['password'], PASSWORD_DEFAULT);
-
         $user_data = [
             'firstname' => htmlspecialchars($data['firstname']),
             'middlename' => is_null($data['middlename']) ? htmlspecialchars($data['middlename']) : $data['middlename'],
             'lastname' => htmlspecialchars($data['lastname']),
             'email' => htmlspecialchars($data['email']),
-            'password' => $hashed_password,
+            'password' => $data['password'],
             'user_record_id' => $user_record_id,
             'date_of_birth' => htmlspecialchars($data['date_of_birth']),
             'identification_type' => htmlspecialchars($data['identification_type']),
@@ -120,8 +118,7 @@ class UserController
         $result = $user->getUserByEmail($email);
 
         if (count($result) > 0) {
-            $isValidLogin = true;
-            // $isValidLogin = password_verify($password, $result['password']);
+            $isValidLogin = password_verify($password, $result['password']);
         }
 
         if (!$isValidLogin) {
